@@ -4,7 +4,7 @@
 \alias{fly}
 \title{Start a run on HTCondor}
 \usage{
-fly(conditions, rscript, input_files = NULL, sleep_time = 1,
+fly(conditions, rscript, reps, input_files = NULL, sleep_time = 1,
   log = "log.$(Process)", output = "out.$(Process)",
   error = "error.$(Process)", universe = "vanilla", requirements = NULL,
   other = NULL, submit_file_name = "Rjob.submit")
@@ -13,6 +13,8 @@ fly(conditions, rscript, input_files = NULL, sleep_time = 1,
 \item{conditions}{Grid of conditions to use for run}
 
 \item{rscript}{The R file to execute}
+
+\item{reps}{Number of replicates to do}
 
 \item{input_files}{Any other files needed to run}
 

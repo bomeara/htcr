@@ -8,6 +8,7 @@
 #' @param input_files Any other files needed to run
 #' @param sleep_time How long between calls to condor_submit
 #' @inheritParams submit_file_create
+#'
 #' @examples
 #' # Let us imagine we want to do a grid search for the maximum likelihood estimates for the mean and sd for a normal distribution for a set of points.
 #' # First you have the points. Let us make them into a file called my_data.rda
@@ -43,7 +44,7 @@
 #'
 #' @seealso packages in the High Performance Task View for R.
 #' @export
-fly <- function(conditions, rscript, input_files=NULL, sleep_time=1, log='log.$(Process)', output='out.$(Process)', error='error.$(Process)', universe="vanilla", requirements=NULL, other=NULL, submit_file_name="Rjob.submit") {
+fly <- function(conditions, rscript, reps, input_files=NULL, sleep_time=1, log='log.$(Process)', output='out.$(Process)', error='error.$(Process)', universe="vanilla", requirements=NULL, other=NULL, submit_file_name="Rjob.submit") {
   input <- rscript
   if(!is.null(input_files)) {
     input <- paste(rscript, paste(input_files, collapse=","), collapse=",")
