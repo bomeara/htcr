@@ -4,17 +4,15 @@
 \alias{submit_file_create}
 \title{Create the submit file for HTCondor}
 \usage{
-submit_file_create(input, reps = 1, executable = "run.sh",
-  arguments = NULL, log = "log.$(Process)", output = "out.$(Process)",
+submit_file_create(input, reps = 1, arguments = NULL,
+  log = "log.$(Process)", output = "out.$(Process)",
   error = "error.$(Process)", universe = "vanilla", requirements = NULL,
-  other = NULL, submit_file_name = "Rjob.submit")
+  other = NULL, executable = "run.sh", submit_file_name = "Rjob.submit")
 }
 \arguments{
 \item{input}{Input files}
 
 \item{reps}{Number of replicates to do}
-
-\item{executable}{Executable file}
 
 \item{arguments}{Arguments to pass to executable}
 
@@ -29,6 +27,8 @@ submit_file_create(input, reps = 1, executable = "run.sh",
 \item{requirements}{Requirements to pass as a requirements call}
 
 \item{other}{Other lines to add to the submit file (such as rank)}
+
+\item{executable}{Executable file name to make}
 
 \item{submit_file_name}{Name of the final submit file}
 }

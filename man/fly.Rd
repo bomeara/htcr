@@ -12,8 +12,6 @@ fly(conditions, rscript, reps = 1, input_files = NULL, sleep_time = 1,
 \arguments{
 \item{conditions}{Grid of conditions to use for run}
 
-\item{rscript}{The R file to execute}
-
 \item{reps}{Number of replicates to do}
 
 \item{input_files}{Any other files needed to run}
@@ -50,12 +48,12 @@ save(data_points, file="my_data.rda")
 
 args <- commandArgs(TRUE)
 job_number <- args[1]
-set.seed(round(runif(1, 1, 10000000000) + as.numeric(job_number), 0)) #to make sure we don't have jobs use the same exact seed if they fire at the same time
+set.seed(round(runif(1, 1, 10000) + as.numeric(job_number), 0)) #to make sure we don't have jobs use the same exact seed if they fire at the same time
 x_mean <- args[2]
 x_sd <- args[3]
 load("my_data.rda") # which loads the data. We could instead do read.csv, etc.
 lnl <- dnorm(data_points, mean=x_mean, sd=x_sd, log=TRUE)
-save(rep_number, x_mean, x_sd, lnl, file=paste0("Results_Rep",job_number,"_Mean_",signif(x_mean,2), "_SD_", signif(x_sd, 2), ".rda"))
+save(job_number, x_mean, x_sd, lnl, file=paste0("Results_Job",job_number,"_Mean_",signif(x_mean,2), "_SD_", signif(x_sd, 2), ".rda"))
 
 # Then let's try making a set of points to try
 
