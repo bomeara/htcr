@@ -4,13 +4,16 @@
 \alias{executable_file_create}
 \title{Create the executable file to run R}
 \usage{
-executable_file_create(rscript = "batch.R", executable = "run.sh")
+executable_file_create(rscript = "batch.R", executable_file_name = "run.sh",
+  arguments)
 }
 \arguments{
 \item{rscript}{The R file to run}
 
-\item{executable}{Executable file name}
+\item{executable_file_name}{Executable file name}
+
+\item{arguments}{Arguments to pass to rscript}
 }
 \description{
-HTCondor needs a simple executable. This will make a file (with the name passed to \code{executable}) that contains a \code{Rscript} command followed by a script name (passed to this function with \code{rscript})
+HTCondor needs a simple executable. This will make a file (with the name passed to \code{executable_file_name}) that contains a \code{Rscript} command followed by a script name (passed to this function with \code{rscript})
 }
