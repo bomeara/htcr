@@ -10,16 +10,16 @@
 #' @inheritParams submit_file_create
 #'
 #' @examples
-#' # Let us imagine we want to do a grid search for the maximum likelihood estimates for the mean and sd for a normal distribution for a set of points.
-#' # First you have the points. Let us make them into a file called my_data.rda
 #' \dontrun{
+#' # Let us imagine we want to do a grid search for the maximum likelihood estimates for the mean and sd for a normal distribution for a set of points.
+#'
+#' # First you have the points. Let us make them into a file called my_data.rda
+#'
 #' data_points <- rnorm(1000, mean=3.1, sd=.42)
 #' save(data_points, file="my_data.rda")
-#' }
 #'
 #' # The following code you would put in a file, let's call it batch.R. This will get the likelihood for a normal distribution for a set of points.
 #'
-#' \dontrun{
 #' args <- commandArgs(TRUE)
 #' job_number <- args[1]
 #' set.seed(round(runif(1, 1, 10000000000) + as.numeric(job_number), 0)) #to make sure we don't have jobs use the same exact seed if they fire at the same time
@@ -28,23 +28,21 @@
 #' load("my_data.rda") # which loads the data. We could instead do read.csv, etc.
 #' lnl <- dnorm(data_points, mean=x_mean, sd=x_sd, log=TRUE)
 #' save(rep_number, x_mean, x_sd, lnl, file=paste0("Results_Rep",job_number,"_Mean_",signif(x_mean,2), "_SD_", signif(x_sd, 2), ".rda"))
-#' }
 #'
-#' Then let's try making a set of points to try
-#' \dontrun{
+#' # Then let's try making a set of points to try
+#'
 #' mean_attempts <- seq(from=-5, to=5, by=1)
 #' sd_attempts <- seq(from=0, to=1, by=0.1)
 #' conditions <- expand.grid(means=mean_attempts, sds=sd_attempts)
-#' }
 #'
-#' Now we can use this function send off the jobs to condor
-#' \dontrun{
+#' # Now we can use this function send off the jobs to condor
+#'
 #' fly(conditions, reps=2, rscript="batch.R", input_files="my_data.rda")
 #' }
 #'
 #' @seealso packages in the High Performance Task View for R.
 #' @export
-fly <- function(conditions, rscript, reps, input_files=NULL, sleep_time=1, log='log.$(Process)', output='out.$(Process)', error='error.$(Process)', universe="vanilla", requirements=NULL, other=NULL, submit_file_name="Rjob.submit") {
+fly <- function(conditions, rscript, reps=1, input_files=NULL, sleep_time=1, log='log.$(Process)', output='out.$(Process)', error='error.$(Process)', universe="vanilla", requirements=NULL, other=NULL, submit_file_name="Rjob.submit") {
   input <- rscript
   if(!is.null(input_files)) {
     input <- paste(rscript, paste(input_files, collapse=","), collapse=",")

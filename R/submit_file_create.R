@@ -14,12 +14,18 @@
 #' @param requirements  Requirements to pass as a requirements call
 #' @param other Other lines to add to the submit file (such as rank)
 #' @param submit_file_name Name of the final submit file
+#' @examples
+#' \dontrun{
+#'  submit_file_create(input=c("birds.tre", "bird_traits.csv"), reps=3, executable="batch.R"))
+#'}
 #' @export
-submit_file_create <- function(input, reps=1, executable="run.sh", log='log.$(Process)', output='out.$(Process)', error='error.$(Process)', universe="vanilla", requirements=NULL, other=NULL, submit_file_name="Rjob.submit") {
+submit_file_create <- function(input, reps=1, executable="run.sh", arguments=NULL, log='log.$(Process)', output='out.$(Process)', error='error.$(Process)', universe="vanilla", requirements=NULL, other=NULL, submit_file_name="Rjob.submit") {
   final.file <- paste0("# Created using htcr at ", Sys.time(), "\n\n")
   final.file <- paste0(final.file, "\nUniverse = ", universe)
-  final.file <- paste0(final.file, "\nArguments = ", arguments)
-  final.file <- paste0(final.file, "\nInput = ", input)
+  if(!is.null(arguments)) {
+    final.file <- paste0(final.file, "\nArguments = ", arguments)
+  }
+  final.file <- paste0(final.file, "\nInput = ", paste(input, collapse=","))
   final.file <- paste0(final.file, "\nOutput = ", output)
   final.file <- paste0(final.file, "\nLog = ", log)
   final.file <- paste0(final.file, "\nError = ", error)
