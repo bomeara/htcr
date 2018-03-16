@@ -29,7 +29,9 @@ submit_file_create(input, reps = 1, executable = "run.sh",
 \item{other}{Other lines to add to the submit file (such as rank)}
 
 \item{submit_file_name}{Name of the final submit file}
+
+\item{arguments}{Arguments to pass to executable}
 }
 \description{
-Create the submit file for HTCondor
+This creates the submit file run with \code{condor_submit}. The default arguments take advantage of HTCondor macros to append process id to each output. This has named arguments for usual submit file elements; if you want others, add them to the \code{other} argument in the form you want them in a typical submit file.
 }

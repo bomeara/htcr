@@ -1,8 +1,12 @@
 #' Create the submit file for HTCondor
 #'
+#' @description
+#' This creates the submit file run with \code{condor_submit}. The default arguments take advantage of HTCondor macros to append process id to each output. This has named arguments for usual submit file elements; if you want others, add them to the \code{other} argument in the form you want them in a typical submit file.
+#'
 #' @param input Input files
 #' @param reps Number of replicates to do
 #' @param executable Executable file
+#' @param arguments Arguments to pass to executable
 #' @param log Log file
 #' @param output Output file (in addition to ones the script itself creates)
 #' @param error Error file
@@ -14,6 +18,7 @@
 submit_file_create <- function(input, reps=1, executable="run.sh", log='log.$(Process)', output='out.$(Process)', error='error.$(Process)', universe="vanilla", requirements=NULL, other=NULL, submit_file_name="Rjob.submit") {
   final.file <- paste0("# Created using htcr at ", Sys.time(), "\n\n")
   final.file <- paste0(final.file, "\nUniverse = ", universe)
+  final.file <- paste0(final.file, "\nArguments = ", arguments)
   final.file <- paste0(final.file, "\nInput = ", input)
   final.file <- paste0(final.file, "\nOutput = ", output)
   final.file <- paste0(final.file, "\nLog = ", log)
@@ -24,6 +29,7 @@ submit_file_create <- function(input, reps=1, executable="run.sh", log='log.$(Pr
   if(!is.null(other)) {
       final.file <- paste0(final.file, "\n", other)
   }
+  final.file <- paste0(final.file, "\nshould_transfer_files = YES")
   final.file <- paste0(final.file, "\n\nQueue")
   if(reps>1) {
     final.file <- paste0(final.file, " ", reps)
