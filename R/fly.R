@@ -55,5 +55,8 @@ fly <- function(conditions, rscript, input_files=NULL, sleep_time=1, log='log.$(
     submit_file_create(input,  executable_file_name=executable_file_full, log=log, output=output, error=error, universe=universe, requirements=requirements, other=other, submit_file_name=submit_file_full)
     executable_file_create(rscript=rscript, executable_file_name=executable_file_full, arguments=conditions[condition.index,])
     system(paste0("condor_submit ", submit_file_full))
+    if(sleep_time>0) {
+      Sys.sleep(sleep_time)
+    }
   }
 }
